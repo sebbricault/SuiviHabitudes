@@ -1,8 +1,22 @@
 import React from 'react';
 import {Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen: React.FC = () => {
+  type RootStackParamList = {
+    Home: undefined;
+    AddHabit: undefined;
+    // ... autres écrans si nécessaire
+  };
+
+  type HomeScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    'Home'
+  >;
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
   interface Habit {
     id: string;
     name: string;
@@ -28,7 +42,9 @@ const HomeScreen: React.FC = () => {
         keyExtractor={item => item.id}
       />
       {/* Bouton d'ajout flottant */}
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate('AddHabit')}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </LinearGradient>
